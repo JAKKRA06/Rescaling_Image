@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        <h1>Upload an image to recsale it !!</h1>
+
+        {{ form_start(form) }}
+
+            {{form_widget(form) }}
+
+            {{form_widget(form) }}
+
+            {{form_widget(form) }}
+
+
+            <button class=" btn btn-primary" type="submit">Recsale</button>
+
+
+        {{ form_end(form) }}
+
+
+<img src="{{ asset('uploads/image/1.png') }}">
+        
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
