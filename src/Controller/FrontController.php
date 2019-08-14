@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Utils\LocalUploader;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+
+
 class FrontController extends AbstractController
 {
     /**
@@ -17,6 +21,9 @@ class FrontController extends AbstractController
      */
     public function index(Request $request, LocalUploader $imageUploader)
     {
+        $executionStartTime = microtime(true);
+
+
         $image = new Image;
         $form = $this->createForm(ImageFormType::class, $image);
 
@@ -26,8 +33,6 @@ class FrontController extends AbstractController
 
             $this->deleteAllImage();
 
-
-            $uploaded_image = $form['uploaded_image']->getData();
             $new_height = $form['height']->getData();
             $new_width = $form['width']->getData();
 
@@ -36,25 +41,41 @@ class FrontController extends AbstractController
 
             $file = $image->getUploadedImage();
 
+            $image->setWidth($new_width);
+            $image->setHeight($new_height);
+            
+            
             $fileName = $imageUploader->upload($file);
 
             $base_path = Image::uploadFolder;
 
 
-            $image->setWidth($new_width);
-            $image->setHeight($new_height);
+
             $image->setPath($base_path.$fileName[0]);
             $em->persist($image);
 
             $em->flush();
 
-            
+            dump($image);
+
+
+
+          $executionEndTime = microtime(true);   
+ 
+        $seconds = $executionEndTime - $executionStartTime;
+ 
+        $fileName[4]->info($seconds,['execution time']);
+
+       
         }
+
 
         return $this->render('base.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
+
 
     private function deleteAllImage()
     {

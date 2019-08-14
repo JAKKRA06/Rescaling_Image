@@ -31,7 +31,7 @@ class Image
     private $width;
 
     /**
-     * @Assert\NotBlank(message="Please enter a valid png or jpeg image.")
+     * @Assert\NotBlank(message="Please enter a valid png or jpg image.")
      * @Assert\File(mimeTypes={ "image/png" })
      */
     private $uploaded_image;
