@@ -3,29 +3,35 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+        {% endblock %}
     </head>
     <body>
         {% block body %}
-        <h1>Upload an image to recsale it !!</h1>
+        <h1 class="title">Upload an image to recsale it !!</h1>
 
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'class': 'formUpload'} } ) }}
+            <div class="image">
+                {{form_widget(form) }}
+            </div>
+            <div class="height">
+            {{ form_label(form, 'My Custom Task Label') }}
+                {{form_widget(form) }}
+            </div>
+            <div class="width">
+                {{form_widget(form) }}
+            </div>
 
-            {{form_widget(form) }}
-
-            {{form_widget(form) }}
-
-            {{form_widget(form) }}
-
-
-            <button class=" btn btn-primary" type="submit">Recsale</button>
+            <button class="btn btn-primary button" type="submit">Recsale</button>
 
 
         {{ form_end(form) }}
 
-
-        <img src="{{ asset('uploads/image/1.png') }}">
-
+{% if form.vars.submitted == true %}
+        <img src="./uploads/image/1.png">
+{% endif %}
 
         
         {% endblock %}

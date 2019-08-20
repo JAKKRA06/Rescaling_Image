@@ -34,14 +34,10 @@ class FrontController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
-            $this->deleteAllImage();
+            //$this->deleteAllImage();
 
             $newHeight = $form['height']->getData();
             $newWidth = $form['width']->getData();
-            //$newFile = $form['uploaded_image']->getData();
-
-
-            //$em = $this->getDoctrine()->getManager();
 
             $file = $image->getUploadedImage();
 
@@ -49,45 +45,14 @@ class FrontController extends AbstractController
             $image->setHeight($newHeight);
             
             
-            $fileName = $imageUploader->upload($file);
-
-            $base_path = Image::uploadFolder;
-
-
-
-            $image->setPath($base_path.$fileName[0]);
-            //$em->persist($image);
-
-            //$em->flush();
-
-            dump($fileName[0],$fileName[1], $fileName[2], $fileName[3]);
-
-            //$savedImage = $fileName[5]; //fizyczny obraz
-            $newFile = imagecreatefrompng('./uploads/image/1.png');
-
-            $imageWidth = $fileName[2];
-            $imageHeight = $fileName[3];
-
-            $newImage = imagecreatetruecolor($newWidth, $newHeight);
-            imagecopyresized($newImage, $newFile, 200, 150, 0, 0, $newWidth, $newHeight, $imageWidth, $imageHeight);
-            //header("Content-type: image/png");
-
-            imagepng($newImage);
-
-
-
+            $fileName = $imageUploader->upload($file, $newHeight, $newWidth);
 
 
             $executionEndTime = microtime(true);   
  
             $seconds = $executionEndTime - $executionStartTime;
     
-            $fileName[4]->info($seconds,['execution time']);
-
-            return $this->render('base.html.twig', [
-                'form' => $form->createView(),
-                'newImage' => $newImage
-            ]);
+            $fileName[1]->info($seconds,['execution time [s]']);
        
         }
 

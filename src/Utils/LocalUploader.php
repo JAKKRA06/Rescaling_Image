@@ -16,6 +16,7 @@ class LocalUploader
 {
 
     private $targetDirectory;
+    private $newTargetDirectory;
 
     public $file;
 
@@ -24,7 +25,7 @@ class LocalUploader
         $this->targetDirectory = $targetDirectory;
     }
 
-    public function upload($file)
+    public function upload($file,  $newHeight,  $newWidth)
     {
         $image = new Image();
 
@@ -32,38 +33,55 @@ class LocalUploader
 
         $fileName = $image_number.'.'.$file->guessExtension();
 
-
-
-
         try {
             $file->move($this->getTargetDirectory(), $fileName);
         } catch (FileException $e) {
-            //enythink
+            //
         }
 
-        $size = getimagesize('./uploads/image/' . $fileName);
+        $size = getimagesize('./uploads/image/1.png');
+        
+        $loadedFile = imagecreatefrompng('./uploads/image/1.png');
 
-        $oryg_image_name = $this->clear(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+        $imageWidth = $size[0];
+        $imageHeight = $size[1]; 
 
-        $oryg_width = $size[0];
-        $oryg_height = $size[1];
 
-        $logger = new Logger('kuba');
+
+        $newImage = imagecreatetruecolor($newWidth, $newHeight);
+
+        imagecopyresized($newImage, $loadedFile, 0, 0, 0, 0, $newWidth, $newHeight, $imageWidth, $imageHeight);
+        
+        $save = './uploads/image/1.png';
+
+        chmod($save, 0755);
+
+        imagepng($newImage, $save,0,NULL);
+
+        imagedestroy($newImage);
+
+
+
+        $logger = new Logger('Kuba');
         $logger->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::DEBUG));
         
         $logger->info($fileName,['file name']);
 
-        $logger->info($oryg_width . 'x' . $oryg_height, ['width x height']);
+        $logger->info($newWidth . 'x' . $newHeight, ['width x height']);
 
 
-
-        return [$fileName, $oryg_image_name, $oryg_width, $oryg_height, $logger, $file];
+        return [$fileName, $logger, $file, $newImage];
 
     }
 
     private function getTargetDirectory()
     {
         return $this->targetDirectory;
+    }
+
+    private function getNewTargetDirectory()
+    {
+        return $this->newTargetDirectory;
     }
 
     private function clear($string)
