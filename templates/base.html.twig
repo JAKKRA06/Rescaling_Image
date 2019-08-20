@@ -9,32 +9,37 @@
         {% endblock %}
     </head>
     <body>
+
         {% block body %}
-        <h1 class="title">Upload an image to recsale it !!</h1>
 
-        {{ form_start(form, {'attr': {'class': 'formUpload'} } ) }}
-            <div class="image">
-                {{form_widget(form) }}
-            </div>
-            <div class="height">
-            {{ form_label(form, 'My Custom Task Label') }}
-                {{form_widget(form) }}
-            </div>
-            <div class="width">
-                {{form_widget(form) }}
-            </div>
+        <div class="content">
+            <h1 class="title">Upload an image to recsale it !!</h1>
 
-            <button class="btn btn-primary button" type="submit">Recsale</button>
+            {{ form_start(form, {'attr': {'class': 'formUpload'} } ) }}
+                <div class="upload">
+                    {{ form_widget(form) }}
+                </div>
+                <div class="height">
+                    {{form_widget(form) }}
+                </div>
+                <div class="width">
+                    {{form_widget(form) }}
+                </div>
+                <div class="buttonDiv">
+                    <button class="btn btn-primary button" type="submit">Recsale</button>
+                </div>
 
+            {{ form_end(form) }}
 
-        {{ form_end(form) }}
-
-{% if form.vars.submitted == true %}
-        <img src="./uploads/image/1.png">
-{% endif %}
-
+            {% if form.vars.submitted == true %}
+                    <div class="image">
+                        <img src="./uploads/image/1.png">
+                    </div>
+            {% endif %}
+        </div>
         
         {% endblock %}
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>

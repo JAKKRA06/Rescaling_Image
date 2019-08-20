@@ -26,15 +26,12 @@ class FrontController extends AbstractController
 
         $executionStartTime = microtime(true);
 
-
         $image = new Image;
         $form = $this->createForm(ImageFormType::class, $image);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-
-            //$this->deleteAllImage();
 
             $newHeight = $form['height']->getData();
             $newWidth = $form['width']->getData();
@@ -44,7 +41,6 @@ class FrontController extends AbstractController
             $image->setWidth($newWidth);
             $image->setHeight($newHeight);
             
-            
             $fileName = $imageUploader->upload($file, $newHeight, $newWidth);
 
 
@@ -52,7 +48,7 @@ class FrontController extends AbstractController
  
             $seconds = $executionEndTime - $executionStartTime;
     
-            $fileName[1]->info($seconds,['execution time [s]']);
+            $fileName[1]->info($seconds, ['execution time [s]']);
        
         }
 

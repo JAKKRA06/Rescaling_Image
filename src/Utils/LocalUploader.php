@@ -16,9 +16,8 @@ class LocalUploader
 {
 
     private $targetDirectory;
-    private $newTargetDirectory;
-
     public $file;
+
 
     public function __construct($targetDirectory)
     {
@@ -40,13 +39,10 @@ class LocalUploader
         }
 
         $size = getimagesize('./uploads/image/1.png');
-        
-        $loadedFile = imagecreatefrompng('./uploads/image/1.png');
-
         $imageWidth = $size[0];
-        $imageHeight = $size[1]; 
+        $imageHeight = $size[1];     
 
-
+        $loadedFile = imagecreatefrompng('./uploads/image/1.png');
 
         $newImage = imagecreatetruecolor($newWidth, $newHeight);
 
@@ -61,8 +57,8 @@ class LocalUploader
         imagedestroy($newImage);
 
 
-
         $logger = new Logger('Kuba');
+
         $logger->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::DEBUG));
         
         $logger->info($fileName,['file name']);
@@ -71,30 +67,11 @@ class LocalUploader
 
 
         return [$fileName, $logger, $file, $newImage];
-
     }
 
     private function getTargetDirectory()
     {
         return $this->targetDirectory;
     }
-
-    private function getNewTargetDirectory()
-    {
-        return $this->newTargetDirectory;
-    }
-
-    private function clear($string)
-    {
-        $string = preg_replace('/[^A-Za-z0-9- ]+/', '', $string);
-
-        return $string;
-    }
-
-
-
-
-
-
 
 }

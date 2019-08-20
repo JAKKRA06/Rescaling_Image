@@ -1,23 +1,43 @@
 body {
-    background-color : grey;
+    background-color : #232529;
+    color            : #fff;
 }
 
 .title{
-    margin-left: auto;
-    margin-right: auto;
+    text-align : center;
 }
 
 .formUpload{
-
+    text-align    : center;
+    margin-top    : 20px;
+    margin-bottom : 20px;
 }
 
 input {
-    width: 200px;
-    padding: 3px 10px;
-    border-radius: 4px;
+    width         : 200px;
+    padding       : 3px 10px;
+    border-radius : 4px;
+}
+
+#image_form_uploaded_image {
+    padding : 0;
 }
 
 .btn {
-    width: 150px;
-    
+    width         : 150px;
+    margin-bottom : 20px;
+    margin-top    : 20px;
+}
+
+.label {
+    width : 100px;
+}
+
+.image {
+    text-align : center;
+    border     : 2px solid #000;
+}
+
+.required {
+    width : 100px;
 }
