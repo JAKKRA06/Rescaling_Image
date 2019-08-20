@@ -78,6 +78,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "harvyde/image": {
+        "version": "dev-master"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

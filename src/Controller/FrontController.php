@@ -21,8 +21,10 @@ class FrontController extends AbstractController
      */
     public function index(Request $request, LocalUploader $imageUploader)
     {
-        $executionStartTime = microtime(true);
+        
+        $this->deleteAllImage();
 
+        $executionStartTime = microtime(true);
 
         $image = new Image;
         $form = $this->createForm(ImageFormType::class, $image);
@@ -31,50 +33,30 @@ class FrontController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
-            $this->deleteAllImage();
-
-            $new_height = $form['height']->getData();
-            $new_width = $form['width']->getData();
-
-
-            $em = $this->getDoctrine()->getManager();
+            $newHeight = $form['height']->getData();
+            $newWidth = $form['width']->getData();
 
             $file = $image->getUploadedImage();
 
-            $image->setWidth($new_width);
-            $image->setHeight($new_height);
+            $image->setWidth($newWidth);
+            $image->setHeight($newHeight);
             
-            
-            $fileName = $imageUploader->upload($file);
-
-            $base_path = Image::uploadFolder;
+            $fileName = $imageUploader->upload($file, $newHeight, $newWidth);
 
 
-
-            $image->setPath($base_path.$fileName[0]);
-            $em->persist($image);
-
-            $em->flush();
-
-            dump($image);
-
-
-
-          $executionEndTime = microtime(true);   
+            $executionEndTime = microtime(true);   
  
-        $seconds = $executionEndTime - $executionStartTime;
- 
-        $fileName[4]->info($seconds,['execution time']);
-
+            $seconds = $executionEndTime - $executionStartTime;
+    
+            $fileName[1]->info($seconds, ['execution time [s]']);
        
         }
 
 
         return $this->render('base.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
-
 
 
     private function deleteAllImage()
