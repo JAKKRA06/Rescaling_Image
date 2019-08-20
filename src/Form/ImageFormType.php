@@ -14,7 +14,7 @@ class ImageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('uploaded_image', FileType::class, ['label' => 'Image',
+            ->add('uploaded_image', FileType::class, ['label' => 'Image [png]',
                             'mapped' => true,
                             'required' => true,
                         ])
