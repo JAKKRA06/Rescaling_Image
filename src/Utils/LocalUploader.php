@@ -48,19 +48,16 @@ class LocalUploader
         $oryg_width = $size[0];
         $oryg_height = $size[1];
 
-        $image_info = getimagesize('./uploads/image/' . $fileName);
-
-
         $logger = new Logger('kuba');
         $logger->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::DEBUG));
         
         $logger->info($fileName,['file name']);
 
-        $logger->info($image_info[0] . 'x' . $image_info[1], ['width x height']);
+        $logger->info($oryg_width . 'x' . $oryg_height, ['width x height']);
 
 
 
-        return [$fileName, $oryg_image_name, $oryg_width, $oryg_height, $logger];
+        return [$fileName, $oryg_image_name, $oryg_width, $oryg_height, $logger, $file];
 
     }
 

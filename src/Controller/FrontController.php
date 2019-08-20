@@ -21,6 +21,9 @@ class FrontController extends AbstractController
      */
     public function index(Request $request, LocalUploader $imageUploader)
     {
+        
+        $this->deleteAllImage();
+
         $executionStartTime = microtime(true);
 
 
@@ -33,16 +36,17 @@ class FrontController extends AbstractController
 
             $this->deleteAllImage();
 
-            $new_height = $form['height']->getData();
-            $new_width = $form['width']->getData();
+            $newHeight = $form['height']->getData();
+            $newWidth = $form['width']->getData();
+            //$newFile = $form['uploaded_image']->getData();
 
 
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
 
             $file = $image->getUploadedImage();
 
-            $image->setWidth($new_width);
-            $image->setHeight($new_height);
+            $image->setWidth($newWidth);
+            $image->setHeight($newHeight);
             
             
             $fileName = $imageUploader->upload($file);
@@ -52,29 +56,46 @@ class FrontController extends AbstractController
 
 
             $image->setPath($base_path.$fileName[0]);
-            $em->persist($image);
+            //$em->persist($image);
 
-            $em->flush();
+            //$em->flush();
 
-            dump($image);
+            dump($fileName[0],$fileName[1], $fileName[2], $fileName[3]);
+
+            //$savedImage = $fileName[5]; //fizyczny obraz
+            $newFile = imagecreatefrompng('./uploads/image/1.png');
+
+            $imageWidth = $fileName[2];
+            $imageHeight = $fileName[3];
+
+            $newImage = imagecreatetruecolor($newWidth, $newHeight);
+            imagecopyresized($newImage, $newFile, 200, 150, 0, 0, $newWidth, $newHeight, $imageWidth, $imageHeight);
+            //header("Content-type: image/png");
+
+            imagepng($newImage);
 
 
 
-          $executionEndTime = microtime(true);   
+
+
+            $executionEndTime = microtime(true);   
  
-        $seconds = $executionEndTime - $executionStartTime;
- 
-        $fileName[4]->info($seconds,['execution time']);
+            $seconds = $executionEndTime - $executionStartTime;
+    
+            $fileName[4]->info($seconds,['execution time']);
 
+            return $this->render('base.html.twig', [
+                'form' => $form->createView(),
+                'newImage' => $newImage
+            ]);
        
         }
 
 
         return $this->render('base.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
-
 
 
     private function deleteAllImage()

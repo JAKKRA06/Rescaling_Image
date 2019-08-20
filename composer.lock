@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "56cfe42cabf85612276147d133c07678",
+    "content-hash": "367b332d6d0651f4a87569852c4204eb",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1206,6 +1206,55 @@
                 "reflection"
             ],
             "time": "2018-06-14T14:45:07+00:00"
+        },
+        {
+            "name": "harvyde/image",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/harvyde/image.git",
+                "reference": "c2038853829d17b8fe7c74b1ffb1e2dc2afe20bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/harvyde/image/zipball/c2038853829d17b8fe7c74b1ffb1e2dc2afe20bc",
+                "reference": "c2038853829d17b8fe7c74b1ffb1e2dc2afe20bc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Image.inc"
+                ],
+                "psr-4": {
+                    "harvyde\\Image\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Harvinder Singh",
+                    "email": "mail@harvinderdeogan.com"
+                }
+            ],
+            "description": "render images at ease, renders 2x images for retina screens, detect image dimensions using php ext-gd",
+            "homepage": "http://www.HarvinderDeogan.com",
+            "keywords": [
+                "image",
+                "image class",
+                "retina"
+            ],
+            "time": "2019-06-19T07:51:42+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -4602,16 +4651,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.12.0",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "201d0e050dca336c44f93657ce1f34f3b3868432"
+                "reference": "c4388410e2fb6321e77c5dd6e3cb2dba821f9fe6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/201d0e050dca336c44f93657ce1f34f3b3868432",
-                "reference": "201d0e050dca336c44f93657ce1f34f3b3868432",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/c4388410e2fb6321e77c5dd6e3cb2dba821f9fe6",
+                "reference": "c4388410e2fb6321e77c5dd6e3cb2dba821f9fe6",
                 "shasum": ""
             },
             "require": {
@@ -4666,12 +4715,14 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2019-07-09T22:19:18+00:00"
+            "time": "2019-08-18T17:34:03+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "harvyde/image": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
